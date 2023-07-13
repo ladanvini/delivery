@@ -1,4 +1,4 @@
-package com.vini.delivery.services.delivery;
+package com.vini.delivery.services.product;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,14 +15,14 @@ import org.junit.Test;
 
 import com.vini.delivery.entities.Product;
 import com.vini.delivery.entities.ProductType;
-import com.vini.delivery.services.DeliveryDateService;
+import com.vini.delivery.services.ProductService;
 
 public class GetValidWeekDaysForAllProductsTest {
-    DeliveryDateService deliveryService;
+    ProductService productService;
     
     @Before
     public void setUp() {
-         deliveryService = new DeliveryDateService();
+         productService = new ProductService();
     }
 
     @Test
@@ -46,7 +46,7 @@ public class GetValidWeekDaysForAllProductsTest {
             0));
         }
         
-        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> actual = productService.getValidWeekDaysForAllProducts(testProducts);
         List<DayOfWeek> expected = new ArrayList<>(allWeekDays);
         Collections.sort(expected);
         assertIterableEquals(expected, actual);
@@ -66,7 +66,7 @@ public class GetValidWeekDaysForAllProductsTest {
             0));
         }
         
-        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> actual = productService.getValidWeekDaysForAllProducts(testProducts);
         List<DayOfWeek> expected = new ArrayList<>();
         assertIterableEquals(expected, actual);
         
@@ -94,7 +94,7 @@ public class GetValidWeekDaysForAllProductsTest {
             ProductType.NORMAL,
             0));
         
-        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> actual = productService.getValidWeekDaysForAllProducts(testProducts);
         List<DayOfWeek> expected = new ArrayList<>();
         assertIterableEquals(expected, actual);
         
@@ -117,7 +117,7 @@ public class GetValidWeekDaysForAllProductsTest {
             0));
         }
         
-        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> actual = productService.getValidWeekDaysForAllProducts(testProducts);
         List<DayOfWeek> expected = new ArrayList<>(sameWeekDays);
         Collections.sort(expected);
         assertIterableEquals(expected, actual);
@@ -139,7 +139,7 @@ public class GetValidWeekDaysForAllProductsTest {
             0));
         }
         
-        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> actual = productService.getValidWeekDaysForAllProducts(testProducts);
         assertIterableEquals(commonWeekDays, actual);
         
     }
@@ -156,7 +156,7 @@ public class GetValidWeekDaysForAllProductsTest {
             0));
         }
         
-        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> actual = productService.getValidWeekDaysForAllProducts(testProducts);
         assertIterableEquals(new ArrayList<>(), actual);
         
     }
@@ -173,7 +173,7 @@ public class GetValidWeekDaysForAllProductsTest {
             0));
         }
         
-        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> actual = productService.getValidWeekDaysForAllProducts(testProducts);
         assertIterableEquals(new ArrayList<>(), actual);
         
     }
@@ -183,7 +183,7 @@ public class GetValidWeekDaysForAllProductsTest {
     public void whenEmptyProducts_thenReturnsEmpty(){
         List<Product>  testProducts = new ArrayList<>();
 
-        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> actual = productService.getValidWeekDaysForAllProducts(testProducts);
         assertIterableEquals(new ArrayList<>(), actual);
     }
 
@@ -191,7 +191,7 @@ public class GetValidWeekDaysForAllProductsTest {
     public void whenNoProducts_thenReturnsEmpty(){
         List<Product>  testProducts = null;
 
-        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> actual = productService.getValidWeekDaysForAllProducts(testProducts);
         assertIterableEquals(new ArrayList<>(), actual);
     }
 
