@@ -1,4 +1,4 @@
-package com.vini.delivery.services.delivery;
+package com.vini.delivery.services.product;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -17,17 +17,17 @@ import org.mockito.MockedStatic;
 
 import com.vini.delivery.entities.Product;
 import com.vini.delivery.entities.ProductType;
-import com.vini.delivery.services.DeliveryDateService;
+import com.vini.delivery.services.ProductService;
 
 public class GetValidDeliveryDateRangeForProductsTests {
-    DeliveryDateService deliveryService;
+    ProductService productService;
     Instant fakeCurrentTime;
     @Before
     public void setUp() throws Exception{
         Clock clock = Clock.fixed(Instant.parse("2023-07-10T12:12:12.00Z"), ZoneId.of("UTC"));
         fakeCurrentTime = Instant.now(clock);
 
-        deliveryService = new DeliveryDateService();
+        productService = new ProductService();
     }
 
     @Test
@@ -49,7 +49,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
         Date expectedEndDate = Date.from(Instant.parse("2023-07-24T12:12:12.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
-            Date[] actualDateRange = deliveryService.getValidDeliveryDateRangeForProducts(testProducts);
+            Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
         
             assertEquals(2, actualDateRange.length);
             assertEquals(expectedStartDate, actualDateRange[0]);
@@ -76,7 +76,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
         Date expectedEndDate = Date.from(Instant.parse("2023-07-24T12:12:12.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
-            Date[] actualDateRange = deliveryService.getValidDeliveryDateRangeForProducts(testProducts);
+            Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
         
             assertEquals(2, actualDateRange.length);
             assertEquals(expectedStartDate, actualDateRange[0]);
@@ -118,7 +118,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
         Date expectedEndDate = Date.from(Instant.parse("2023-07-24T12:12:12.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
-            Date[] actualDateRange = deliveryService.getValidDeliveryDateRangeForProducts(testProducts);
+            Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
         
             assertEquals(2, actualDateRange.length);
             assertEquals(expectedStartDate, actualDateRange[0]);
@@ -160,7 +160,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
         Date expectedEndDate = Date.from(Instant.parse("2023-07-24T12:12:12.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
-            Date[] actualDateRange = deliveryService.getValidDeliveryDateRangeForProducts(testProducts);
+            Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
         
             assertEquals(2, actualDateRange.length);
             assertEquals(expectedStartDate, actualDateRange[0]);
@@ -190,7 +190,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
 
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
-            Date[] actualDateRange = deliveryService.getValidDeliveryDateRangeForProducts(testProducts);
+            Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
         
             assertEquals(2, actualDateRange.length);
             assertEquals(expectedStartDate, actualDateRange[0]);
@@ -219,7 +219,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
         Date expectedEndDate = Date.from(Instant.parse("2023-07-16T12:12:12.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
-            Date[] actualDateRange = deliveryService.getValidDeliveryDateRangeForProducts(testProducts);
+            Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
         
             assertEquals(2, actualDateRange.length);
             assertEquals(expectedStartDate, actualDateRange[0]);
@@ -250,7 +250,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
         Date expectedEndDate = Date.from(Instant.parse("2023-07-16T12:12:12.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
-            Date[] actualDateRange = deliveryService.getValidDeliveryDateRangeForProducts(testProducts);
+            Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
         
             assertEquals(2, actualDateRange.length);
             assertEquals(expectedStartDate, actualDateRange[0]);
@@ -278,7 +278,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
 
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
-            Date[] actualDateRange = deliveryService.getValidDeliveryDateRangeForProducts(testProducts);
+            Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
         
             assertEquals(2, actualDateRange.length);
             assertNull(actualDateRange[0]);
@@ -318,7 +318,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
             
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
-            Date[] actualDateRange = deliveryService.getValidDeliveryDateRangeForProducts(testProducts);
+            Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
         
             assertEquals(2, actualDateRange.length);
             assertNull(actualDateRange[0]);
