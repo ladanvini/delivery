@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -100,7 +101,7 @@ public class ProductService {
             return dateRange;   
 
         Date currentDate = Date.from(Instant.now());
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTime(currentDate);
         
         /*
@@ -129,11 +130,22 @@ public class ProductService {
         
         // Set end of range
         calendar.add(Calendar.DATE, endOfRange);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 0);
+
         dateRange[1] = calendar.getTime();
         // Reset calendar to now
         calendar.setTime(currentDate);
         // Set start of range
         calendar.add(Calendar.DATE, minDaysInAdvance);
+        if(minDaysInAdvance!=0){
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+        }
         dateRange[0] = calendar.getTime();
         
         return dateRange;
