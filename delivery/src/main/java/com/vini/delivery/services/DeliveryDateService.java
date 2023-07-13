@@ -15,6 +15,10 @@ public class DeliveryDateService {
      */
     public List<DayOfWeek> getValidWeekDaysForAllProducts(List<Product> allProducts) {
         ArrayList<DayOfWeek> validWeekdays = new ArrayList<>();
+
+        if(allProducts== null || allProducts.size()==0)
+            return validWeekdays;
+            
         int[] weekdayCount = {0,0,0,0,0,0,0};
         for(Product product:allProducts){
             for(DayOfWeek day:product.getDeliveryDays()){
@@ -27,5 +31,6 @@ public class DeliveryDateService {
         }
         Collections.sort(validWeekdays);
         return validWeekdays;
+
     }
 }

@@ -52,6 +52,54 @@ public class GetValidWeekDaysForAllProductsTest {
         assertIterableEquals(expected, actual);
         
     }
+
+    @Test
+    public void whenAllProductsHaveNoDeliveryDays_thenReturnsEmpty(){
+        List<Product>  testProducts = new ArrayList<>();
+        Set<DayOfWeek> noWeekDays =  new HashSet<>();
+
+        for(int i=0; i<5; i++) {
+            testProducts.add(new Product(i,
+            "some_name"+i,
+            noWeekDays,
+            ProductType.NORMAL,
+            0));
+        }
+        
+        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> expected = new ArrayList<>();
+        assertIterableEquals(expected, actual);
+        
+    }
+
+    @Test
+    public void whenSomeProductsHaveNoDeliveryDays_thenReturnsEmpty(){
+        List<Product>  testProducts = new ArrayList<>();
+        Set<DayOfWeek> someWeekDays =  new HashSet<>(Arrays.asList(
+                DayOfWeek.MONDAY,
+                DayOfWeek.THURSDAY,
+                DayOfWeek.SUNDAY
+            ));
+
+        for(int i=0; i<5; i++) {
+            testProducts.add(new Product(i,
+            "some_name"+i,
+            someWeekDays,
+            ProductType.NORMAL,
+            0));
+        }
+        testProducts.add(new Product(6,
+            "some_name",
+            new HashSet<>(),
+            ProductType.NORMAL,
+            0));
+        
+        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        List<DayOfWeek> expected = new ArrayList<>();
+        assertIterableEquals(expected, actual);
+        
+    }
+
     @Test
     public void whenAllProductsCanBeDeliveredOnSameDays_thenReturnsSameDays(){
         List<Product>  testProducts = new ArrayList<>();
@@ -130,5 +178,21 @@ public class GetValidWeekDaysForAllProductsTest {
         
     }
 
+
+    @Test
+    public void whenEmptyProducts_thenReturnsEmpty(){
+        List<Product>  testProducts = new ArrayList<>();
+
+        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        assertIterableEquals(new ArrayList<>(), actual);
+    }
+
+    @Test
+    public void whenNoProducts_thenReturnsEmpty(){
+        List<Product>  testProducts = null;
+
+        List<DayOfWeek> actual = deliveryService.getValidWeekDaysForAllProducts(testProducts);
+        assertIterableEquals(new ArrayList<>(), actual);
+    }
 
 }
