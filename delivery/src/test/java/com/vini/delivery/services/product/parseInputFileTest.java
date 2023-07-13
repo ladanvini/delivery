@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.simple.parser.ParseException;
 import org.junit.After;
@@ -53,9 +55,10 @@ public class parseInputFileTest {
         List<Product> actualList = productService.getProductListFromFile(testFile.getPath());
         assertEquals(1, actualList.size());
         Product actual = actualList.get(0);
-        ArrayList<DayOfWeek> expectedDaysOfWeek = new ArrayList<>(
+        Set<DayOfWeek> expectedDaysOfWeek = new HashSet<>(
             Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.SATURDAY)
             );
+        
         assertEquals(0, actual.getProductId());
         assertEquals("tomato", actual.getName());
         assertIterableEquals(expectedDaysOfWeek,actual.getDeliveryDays());
@@ -86,7 +89,7 @@ public class parseInputFileTest {
         List<Product> actualList = productService.getProductListFromFile(testFile.getPath());
         assertEquals(2, actualList.size());
         
-        ArrayList<DayOfWeek> expectedDaysOfWeek = new ArrayList<>(
+        Set<DayOfWeek> expectedDaysOfWeek = new HashSet<>(
             Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.SATURDAY)
             );
 
