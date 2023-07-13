@@ -2,9 +2,16 @@ package com.vini.delivery;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 import org.json.simple.parser.ParseException;
 
+import com.vini.delivery.entities.DeliveryDate;
+import com.vini.delivery.entities.Product;
+import com.vini.delivery.services.DeliveryDateService;
 import com.vini.delivery.services.ProductService;
 
 public class DeliveryApplication {
@@ -12,8 +19,16 @@ public class DeliveryApplication {
 	public static void main(String[] args) {
 		System.out.println("Hello world!");
 		ProductService productService = new ProductService();
+		DeliveryDateService deliveryDateService = new DeliveryDateService();
+
 		try {
-			productService.getProductListFromFile("delivery\\src\\main\\resources\\static\\productList_0.json");
+			List<Product> allProducts = productService.getProductListFromFile("delivery\\src\\main\\resources\\static\\productList_0.json");
+			List<DayOfWeek> validDaysOfWeek = productService.getValidWeekDaysForAllProducts(allProducts);
+			Date[] dateRange = productService.getValidDeliveryDateRangeForProducts(allProducts);
+			
+			List<DeliveryDate> deliveryDatesUnsorted = deliveryDateService.getValidDeliveryDates("123456", dateRange, new HashSet<>(validDaysOfWeek));
+			for(DeliveryDate deliveryDate : deliveryDatesUnsorted)
+				System.out.println(deliveryDate.toString());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -24,6 +39,7 @@ public class DeliveryApplication {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		System.out.println("Goodbye world!");
 		
 	}
