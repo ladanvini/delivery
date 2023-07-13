@@ -1,6 +1,8 @@
 package com.vini.delivery.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DeliveryDate {
     private String postalCode;
@@ -30,6 +32,18 @@ public class DeliveryDate {
     }
     public void setIsGreenDelivery(Boolean isGreenDelivery) {
         this.isGreenDelivery = isGreenDelivery;
+    }
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+        sdf.setTimeZone(TimeZone.getTimeZone("CET"));
+        String deliveryIsoStr = sdf.format(deliveryDate);
+        return "\t{\n" 
+                + "\t\tpostalCode:" + postalCode + ",\n"
+                + "\t\tdeliveryDate:" + deliveryIsoStr + ",\n"
+                + "\t\tisGreenDelivery:" + isGreenDelivery + ",\n"
+                + "\t}";
     }
 
     

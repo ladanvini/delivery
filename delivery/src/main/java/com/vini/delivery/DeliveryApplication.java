@@ -27,8 +27,11 @@ public class DeliveryApplication {
 			Date[] dateRange = productService.getValidDeliveryDateRangeForProducts(allProducts);
 			
 			List<DeliveryDate> deliveryDatesUnsorted = deliveryDateService.getValidDeliveryDates("123456", dateRange, new HashSet<>(validDaysOfWeek));
-			for(DeliveryDate deliveryDate : deliveryDatesUnsorted)
-				System.out.println(deliveryDate.toString());
+			System.out.println("[");
+			for(int i=0; i<deliveryDatesUnsorted.size()-1;i++)
+				System.out.println(deliveryDatesUnsorted.get(i) + ",");
+			System.out.println(deliveryDatesUnsorted.get(deliveryDatesUnsorted.size()-1));
+			System.out.println("]");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
