@@ -1,6 +1,7 @@
 package com.vini.delivery.services;
 
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -50,16 +51,21 @@ public class DeliveryDateService {
      *
      * @return The valid delivery date range based on above rules
      */
-    Date[] getValidDeliveryDateRangeForProducts(List<Product> products) {
+    public Date[] getValidDeliveryDateRangeForProducts(List<Product> products) {
         Date[] dateRange = {null, null};
         if(products== null || products.size()==0)
-            return dateRange;
+            return dateRange;   
 
-        Date currentDate = new Date();
+        Date currentDate = Date.from(Instant.now());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         
-        int daysToSunday = 7 - calendar.DAY_OF_WEEK;
+        /*
+         * Sunday = 1, so if today is Sunday, we have 7 days until next Sunday
+         */
+        int daysToSunday = 8 - calendar.get(Calendar.DAY_OF_WEEK);
+        if (daysToSunday >= 7)
+            daysToSunday = 0;
         boolean tempFlag = false;
         int minDaysInAdvance = 0;
         for(Product product:products) {
@@ -74,9 +80,9 @@ public class DeliveryDateService {
         }
         int endOfRange = 14;
         if (tempFlag)
-        endOfRange = daysToSunday;
+            endOfRange = daysToSunday;
         if (endOfRange < minDaysInAdvance)
-        return dateRange;
+            return dateRange;
         
         // Set end of range
         calendar.add(Calendar.DATE, endOfRange);
