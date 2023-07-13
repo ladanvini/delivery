@@ -45,8 +45,8 @@ public class GetValidDeliveryDateRangeForProductsTests {
             );
         }
         // Current Time = "2023-07-10T12:12:12.00Z"
-        Date expectedStartDate = Date.from(Instant.parse("2023-07-14T12:12:12.00Z"));
-        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T12:12:12.00Z"));
+        Date expectedStartDate = Date.from(Instant.parse("2023-07-14T00:00:00.00Z"));
+        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T23:59:59.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
             Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
@@ -73,7 +73,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
         }
         // Current Date is "2023-07-10T12:12:12.00Z"
         Date expectedStartDate = Date.from(Instant.parse("2023-07-10T12:12:12.00Z"));
-        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T12:12:12.00Z"));
+        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T23:59:59.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
             Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
@@ -114,8 +114,8 @@ public class GetValidDeliveryDateRangeForProductsTests {
             e.printStackTrace();
         }
 
-        Date expectedStartDate = Date.from(Instant.parse("2023-07-15T12:12:12.00Z"));
-        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T12:12:12.00Z"));
+        Date expectedStartDate = Date.from(Instant.parse("2023-07-15T00:00:00.00Z"));
+        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T23:59:59.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
             Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
@@ -156,8 +156,8 @@ public class GetValidDeliveryDateRangeForProductsTests {
             e.printStackTrace();
         }
 
-        Date expectedStartDate = Date.from(Instant.parse("2023-07-15T12:12:12.00Z"));
-        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T12:12:12.00Z"));
+        Date expectedStartDate = Date.from(Instant.parse("2023-07-15T00:00:00.00Z"));
+        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T23:59:59.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
             Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
@@ -185,8 +185,8 @@ public class GetValidDeliveryDateRangeForProductsTests {
 
         // Current Date is "2023-07-10T12:12:12.00Z"
 
-        Date expectedStartDate = Date.from(Instant.parse("2023-07-18T12:12:12.00Z"));
-        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T12:12:12.00Z"));
+        Date expectedStartDate = Date.from(Instant.parse("2023-07-18T00:00:00.00Z"));
+        Date expectedEndDate = Date.from(Instant.parse("2023-07-24T23:59:59.00Z"));
 
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
@@ -215,8 +215,8 @@ public class GetValidDeliveryDateRangeForProductsTests {
         // Current Date is "2023-07-10" and is on Monday
         // Meaning Temporary products can be delivered until the end of "2023-07-16" (Sunday)
 
-        Date expectedStartDate = Date.from(Instant.parse("2023-07-14T12:12:12.00Z"));
-        Date expectedEndDate = Date.from(Instant.parse("2023-07-16T12:12:12.00Z"));
+        Date expectedStartDate = Date.from(Instant.parse("2023-07-14T00:00:00.00Z"));
+        Date expectedEndDate = Date.from(Instant.parse("2023-07-16T23:59:59.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
             Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
@@ -247,7 +247,7 @@ public class GetValidDeliveryDateRangeForProductsTests {
         // Meaning Temporary products can be delivered until the end of Today
 
         Date expectedStartDate = Date.from(Instant.parse("2023-07-16T12:12:12.00Z"));
-        Date expectedEndDate = Date.from(Instant.parse("2023-07-16T12:12:12.00Z"));
+        Date expectedEndDate = Date.from(Instant.parse("2023-07-16T23:59:59.00Z"));
         try (MockedStatic<Instant> mockedStatic = mockStatic(Instant.class)) {
             mockedStatic.when(Instant::now).thenReturn(fakeCurrentTime);
             Date[] actualDateRange = productService.getValidDeliveryDateRangeForProducts(testProducts);
