@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -37,7 +39,7 @@ public class ProductService {
         Long productId = (Long) prod.get("productId");
         String name = (String) prod.get("name");
         JSONArray deliveryDaysList = (JSONArray) prod.get("deliveryDays");
-        List<DayOfWeek> deliveryDays = new ArrayList<>();
+        Set<DayOfWeek> deliveryDays = new HashSet<>();
         for(Object d : deliveryDaysList)
             deliveryDays.add(DayOfWeek.of(((Long)d).intValue()));
         String productType = (String) prod.get("productType");
@@ -46,6 +48,7 @@ public class ProductService {
         return new Product(productId.intValue()
             , name, deliveryDays, ProductType.valueOf(productType)
             , daysInAdvance.intValue());
-    }
-;
+    };
+
+
 }
