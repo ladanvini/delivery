@@ -13,7 +13,7 @@ public class DeliveryApplication {
 		System.out.println("Hello world!");
 		ProductService productService = new ProductService();
 		try {
-			productService.parseInputFile("delivery\\src\\main\\resources\\static\\productList_0.json");
+			productService.getProductListFromFile("delivery\\src\\main\\resources\\static\\productList_0.json");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

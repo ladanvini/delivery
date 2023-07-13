@@ -50,7 +50,7 @@ public class parseInputFileTest {
         +"}]");
         writer.close();
 
-        List<Product> actualList = productService.parseInputFile(testFile.getPath());
+        List<Product> actualList = productService.getProductListFromFile(testFile.getPath());
         assertEquals(1, actualList.size());
         Product actual = actualList.get(0);
         ArrayList<DayOfWeek> expectedDaysOfWeek = new ArrayList<>(
@@ -83,7 +83,7 @@ public class parseInputFileTest {
         +"]");
         writer.close();
 
-        List<Product> actualList = productService.parseInputFile(testFile.getPath());
+        List<Product> actualList = productService.getProductListFromFile(testFile.getPath());
         assertEquals(2, actualList.size());
         
         ArrayList<DayOfWeek> expectedDaysOfWeek = new ArrayList<>(
@@ -119,7 +119,7 @@ public class parseInputFileTest {
         +"]");
         writer.close();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            productService.parseInputFile(testFile.getPath());
+            productService.getProductListFromFile(testFile.getPath());
         });
         String expectedMessage = "Content of file is invalid.";
         String actualMessage = exception.getMessage();
@@ -139,7 +139,7 @@ public class parseInputFileTest {
         +"]");
         writer.close();
         assertThrows(ParseException.class, () -> {
-            productService.parseInputFile(testFile.getPath());
+            productService.getProductListFromFile(testFile.getPath());
         });
     }
 }

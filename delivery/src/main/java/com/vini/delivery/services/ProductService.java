@@ -17,31 +17,35 @@ import com.vini.delivery.entities.Product;
 import com.vini.delivery.entities.ProductType;
 
 public class ProductService {
-        public List<Product> parseInputFile(String filePath) throws FileNotFoundException, IOException, ParseException {
+        public List<Product> getProductListFromFile(String filePath) throws FileNotFoundException, IOException, ParseException {
         ArrayList<Product> products = new ArrayList<>();
         JSONParser parser = new JSONParser();
         JSONArray a = (JSONArray) parser.parse(new FileReader(filePath));
 
         for (Object o : a){
-            JSONObject prod = (JSONObject) o;
-            if(!prod.keySet().containsAll(Arrays.asList("productId", "name", "deliveryDays", "productType", "daysInAdvance")))
-                throw new IllegalArgumentException("Content of file is invalid.");
-
-            Long productId = (Long) prod.get("productId");
-            String name = (String) prod.get("name");
-            JSONArray deliveryDaysList = (JSONArray) prod.get("deliveryDays");
-            List<DayOfWeek> deliveryDays = new ArrayList<>();
-            for(Object d : deliveryDaysList)
-                deliveryDays.add(DayOfWeek.of(((Long)d).intValue()));
-            String productType = (String) prod.get("productType");
-            Long daysInAdvance = (Long) prod.get("daysInAdvance");
-
-            products.add(new Product(productId.intValue()
-            , name, deliveryDays, ProductType.valueOf(productType)
-            , daysInAdvance.intValue()));
+            Product product = parseJsonObj(o);
+            products.add(product);
 
         }
         return products;
+    }
+    private Product parseJsonObj(Object o) {
+        JSONObject prod = (JSONObject) o;
+        if(!prod.keySet().containsAll(Arrays.asList("productId", "name", "deliveryDays", "productType", "daysInAdvance")))
+            throw new IllegalArgumentException("Content of file is invalid.");
+
+        Long productId = (Long) prod.get("productId");
+        String name = (String) prod.get("name");
+        JSONArray deliveryDaysList = (JSONArray) prod.get("deliveryDays");
+        List<DayOfWeek> deliveryDays = new ArrayList<>();
+        for(Object d : deliveryDaysList)
+            deliveryDays.add(DayOfWeek.of(((Long)d).intValue()));
+        String productType = (String) prod.get("productType");
+        Long daysInAdvance = (Long) prod.get("daysInAdvance");
+
+        return new Product(productId.intValue()
+            , name, deliveryDays, ProductType.valueOf(productType)
+            , daysInAdvance.intValue());
     }
 ;
 }
