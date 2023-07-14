@@ -49,15 +49,15 @@ public class GetValidDeliveryDatesTests {
             assertEquals("123456", date.getPostalCode());
         }
         Date expectedDate0 = Date.from(Instant.parse("2023-07-11T00:00:00.00Z"));
-        Date expectedDate1 = Date.from(Instant.parse("2023-07-13T00:00:00.00Z")); // GREEN!
+        Date expectedDate1 = Date.from(Instant.parse("2023-07-13T00:00:00.00Z")); // GREEN! S
         Date expectedDate2 = Date.from(Instant.parse("2023-07-18T00:00:00.00Z"));
         Date expectedDate3 = Date.from(Instant.parse("2023-07-20T00:00:00.00Z"));
 
-        assertEquals(expectedDate0, actual.get(0).getDeliveryDate());
-        assertFalse(actual.get(0).getIsGreenDelivery());
+        assertEquals(expectedDate1, actual.get(0).getDeliveryDate());
+        assertTrue(actual.get(0).getIsGreenDelivery());
 
-        assertEquals(expectedDate1, actual.get(1).getDeliveryDate());
-        assertTrue(actual.get(1).getIsGreenDelivery());
+        assertEquals(expectedDate0, actual.get(1).getDeliveryDate());
+        assertFalse(actual.get(1).getIsGreenDelivery());
 
         assertEquals(expectedDate2, actual.get(2).getDeliveryDate());
         assertFalse(actual.get(2).getIsGreenDelivery());
@@ -74,6 +74,44 @@ public class GetValidDeliveryDatesTests {
         Date[] range = {startDate, endDate};
         List<DeliveryDate> actual=deliveryService.getValidDeliveryDates("123456", range, new HashSet<>(Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)));
         assertEquals(0, actual.size());
+
+    }
+    @Test
+    public void whenGreenDeliveries_thenReturnsInCorrectOrder(){
+        Date startDate = Date.from(Instant.parse("2023-07-06T12:12:12.00Z"));
+        Date endDate = Date.from(Instant.parse("2023-07-16T00:00:00.00Z"));
+        Date[] range = {startDate, endDate};
+        List<DeliveryDate> actual=deliveryService.getValidDeliveryDates("123456",
+            range,
+            new HashSet<>(Arrays.asList(DayOfWeek.FRIDAY, DayOfWeek.THURSDAY, DayOfWeek.SATURDAY)));
+        assertEquals(6, actual.size());
+        for (DeliveryDate date:actual){
+            assertEquals("123456", date.getPostalCode());
+        }
+        Date expectedDate1 = Date.from(Instant.parse("2023-07-06T12:12:12.00Z")); 
+        Date expectedGreenDate = Date.from(Instant.parse("2023-07-07T00:00:00.00Z")); // GREEN!
+        Date expectedDate2 = Date.from(Instant.parse("2023-07-08T00:00:00.00Z"));
+        Date expectedDate3 = Date.from(Instant.parse("2023-07-13T00:00:00.00Z")); // GREEN!
+        Date expectedDate4 = Date.from(Instant.parse("2023-07-14T00:00:00.00Z")); // GREEN!
+        Date expectedDate5 = Date.from(Instant.parse("2023-07-15T00:00:00.00Z"));
+
+        assertEquals(expectedGreenDate, actual.get(0).getDeliveryDate());
+        assertTrue(actual.get(0).getIsGreenDelivery());
+
+        assertEquals(expectedDate1, actual.get(1).getDeliveryDate());
+        assertFalse(actual.get(1).getIsGreenDelivery());
+
+        assertEquals(expectedDate2, actual.get(2).getDeliveryDate());
+        assertFalse(actual.get(2).getIsGreenDelivery());
+
+        assertEquals(expectedDate3, actual.get(3).getDeliveryDate());
+        assertTrue(actual.get(3).getIsGreenDelivery());
+
+        assertEquals(expectedDate4, actual.get(4).getDeliveryDate());
+        assertTrue(actual.get(4).getIsGreenDelivery());
+
+        assertEquals(expectedDate5, actual.get(5).getDeliveryDate());
+        assertFalse(actual.get(5).getIsGreenDelivery());
 
     }
 

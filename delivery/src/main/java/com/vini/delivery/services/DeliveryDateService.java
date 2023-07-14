@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
@@ -18,7 +19,9 @@ public class DeliveryDateService {
         Date[] validDateRange,
         Set<DayOfWeek> validWeekDays)
     {
-        List<DeliveryDate> deliveryDates = new ArrayList<>();
+        List<DeliveryDate> deliveryDates = new LinkedList<>();
+        List<DeliveryDate> sortedTopGreenDeliveryDates = new ArrayList<>();
+
         if(postalCode == null || postalCode == "")
             throw new IllegalArgumentException("Invalid Postal Code");
         if(validDateRange == null || validDateRange.length != 2)
@@ -36,20 +39,30 @@ public class DeliveryDateService {
         if(end.get(Calendar.HOUR_OF_DAY)!=0 || end.get(Calendar.MINUTE)!=0 || end.get(Calendar.SECOND)!=0 || end.get(Calendar.MILLISECOND)!=0)
             throw new IllegalArgumentException("Invalid End of Date range. Must end at Midnight.");
 
-        if(validWeekDays.contains(calendarDayToDayOfWeek(start.get(Calendar.DAY_OF_WEEK))))
+        if(validWeekDays.contains(calendarDayToDayOfWeek(start.get(Calendar.DAY_OF_WEEK)))){
             deliveryDates.add(new DeliveryDate(postalCode, start.getTime(), this.isGreen(start)));
+            start.add(Calendar.DATE, 1);
+        }
         start.set(Calendar.HOUR_OF_DAY, 0);
         start.set(Calendar.MINUTE, 0);
         start.set(Calendar.SECOND, 0);
         start.set(Calendar.MILLISECOND, 0);
-        
-        while(start.get(Calendar.DATE) != end.get(Calendar.DATE)) {
+        // If green deliveries in the next 3 days, give them priority
+        Calendar greenPrioDateEnd = Calendar.getInstance(TimeZone.getTimeZone(ZoneId.of("UTC")));
+        greenPrioDateEnd.setTime(start.getTime());
+        greenPrioDateEnd.add(Calendar.DATE, 3);
+
+
+        while(start.get(Calendar.DATE) < end.get(Calendar.DATE)) {
             if(validWeekDays.contains(calendarDayToDayOfWeek(start.get(Calendar.DAY_OF_WEEK))))
-                deliveryDates.add(new DeliveryDate(postalCode, start.getTime(), this.isGreen(start)));
+                if(isGreen(start) && start.get(Calendar.DATE)<=greenPrioDateEnd.get(Calendar.DATE))
+                    sortedTopGreenDeliveryDates.add(new DeliveryDate(postalCode, start.getTime(), this.isGreen(start)));
+                else
+                    deliveryDates.add(new DeliveryDate(postalCode, start.getTime(), this.isGreen(start)));
             start.add(Calendar.DATE, 1);
         }
-        
-        return deliveryDates;
+        sortedTopGreenDeliveryDates.addAll(deliveryDates);
+        return sortedTopGreenDeliveryDates;
     }
 
     private boolean isGreen(Calendar date){
