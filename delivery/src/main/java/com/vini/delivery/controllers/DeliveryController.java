@@ -29,7 +29,11 @@ public class DeliveryController {
 			Date[] dateRange = productService.getValidDeliveryDateRangeForProducts(allProducts);
 			
 			List<DeliveryDate> deliveryDatesUnsorted = deliveryDateService.getValidDeliveryDates(postalCode, dateRange, new HashSet<>(validDaysOfWeek));
-			System.out.println("[");
+            if (deliveryDatesUnsorted.size() <= 0){
+                System.out.println("No available delivery dates");
+                return;
+            }
+            System.out.println("[");
 			for(int i=0; i<deliveryDatesUnsorted.size()-1;i++)
 				System.out.println(deliveryDatesUnsorted.get(i) + ",");
 			System.out.println(deliveryDatesUnsorted.get(deliveryDatesUnsorted.size()-1));

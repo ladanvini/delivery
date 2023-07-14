@@ -26,6 +26,8 @@ public class DeliveryDateService {
             throw new IllegalArgumentException("Invalid Postal Code");
         if(validDateRange == null || validDateRange.length != 2)
             throw new IllegalArgumentException("Invalid Date Range");
+        if(validDateRange[0] == null || validDateRange[1] == null)
+            return deliveryDates;
         if(validWeekDays == null)
             throw new IllegalArgumentException("Invalid Week Days");
 
