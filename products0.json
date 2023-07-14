@@ -1,0 +1,23 @@
+[
+    {
+        "productId": 0,
+        "name": "tomato",
+        "deliveryDays": [1, 3, 6],
+        "productType": "NORMAL",
+        "daysInAdvance": 2
+    },
+    {
+        "productId": 1,
+        "name": "cucumber",
+        "deliveryDays": [1, 2, 6],
+        "productType": "TEMPORARY",
+        "daysInAdvance": 3
+    },
+    {
+        "productId": 2,
+        "name": "red onion",
+        "deliveryDays": [1, 6],
+        "productType": "EXTERNAL",
+        "daysInAdvance": 0
+    }
+]

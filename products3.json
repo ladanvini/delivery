@@ -1,0 +1,37 @@
+[
+    {
+        "productId": 0,
+        "name": "tomato",
+        "deliveryDays": [1, 2, 3, 4, 5, 6],
+        "productType": "NORMAL",
+        "daysInAdvance": 2
+    },
+    {
+        "productId": 1,
+        "name": "cucumber",
+        "deliveryDays": [1, 2, 3, 4, 5, 6],
+        "productType": "NORMAL",
+        "daysInAdvance": 0
+    },
+    {
+        "productId": 2,
+        "name": "red onion",
+        "deliveryDays": [1, 3, 6],
+        "productType": "EXTERNAL",
+        "daysInAdvance": 0
+    },
+    {
+        "productId": 2,
+        "name": "olives",
+        "deliveryDays": [3, 6],
+        "productType": "NORMAL",
+        "daysInAdvance": 6
+    },
+    {
+        "productId": 2,
+        "name": "feta cheese",
+        "deliveryDays": [3],
+        "productType": "EXTERNAL",
+        "daysInAdvance": 0
+    }
+]
